@@ -22,6 +22,13 @@ function Navbar() {
         </Link>
 
         <Link
+          to="/jobs"
+          style={{ color: "white", marginRight: "20px", textDecoration: "none" }}
+        >
+          View Jobs
+        </Link>
+
+        <Link
           to="/login"
           style={{ color: "white", marginRight: "20px", textDecoration: "none" }}
         >
@@ -30,9 +37,30 @@ function Navbar() {
 
         <Link
           to="/register"
-          style={{ color: "white", textDecoration: "none" }}
+          style={{ color: "white", marginRight: "20px", textDecoration: "none" }}
         >
           Register
+        </Link>
+
+        <Link
+          to="/post-job"
+          style={{ color: "white", "margin-right":"20px", textDecoration: "none" }}
+        >
+          Post Job
+        </Link>
+
+        <Link
+          to="/my-applications"
+          style={{ color: "white", marginRight: "20px", textDecoration: "none" }}
+        >
+          My Applications
+        </Link>
+
+        <Link
+          to="/recruiter-dashboard"
+          style={{ color: "white", marginRight: "20px", textDecoration: "none" }}
+        >
+          Recruiter Dashboard
         </Link>
       </div>
     </nav>
