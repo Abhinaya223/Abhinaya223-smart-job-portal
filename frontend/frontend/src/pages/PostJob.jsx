@@ -43,66 +43,123 @@ function PostJob() {
   };
 
   return (
-    <div className="container mt-5" style={{ maxWidth: "600px" }}>
+    <div className="container mt-5">
 
-      <div className="card shadow p-4">
+      <div className="row justify-content-center">
 
-        <h2 className="text-center mb-4">
-          Post Job
-        </h2>
+        <div className="col-md-8">
 
-        <form onSubmit={handleSubmit}>
+          <div className="card shadow-lg">
 
-          <input
-            className="form-control mb-3"
-            type="text"
-            name="title"
-            placeholder="Job Title"
-            value={job.title}
-            onChange={handleChange}
-          />
+            <div className="card-header bg-primary text-white text-center">
+              <h3 className="mb-0">Post a New Job</h3>
+            </div>
 
-          <input
-            className="form-control mb-3"
-            type="text"
-            name="company"
-            placeholder="Company"
-            value={job.company}
-            onChange={handleChange}
-          />
+            <div className="card-body p-4">
 
-          <input
-            className="form-control mb-3"
-            type="text"
-            name="location"
-            placeholder="Location"
-            value={job.location}
-            onChange={handleChange}
-          />
+              <form onSubmit={handleSubmit}>
 
-          <input
-            className="form-control mb-3"
-            type="text"
-            name="salary"
-            placeholder="Salary"
-            value={job.salary}
-            onChange={handleChange}
-          />
+                <div className="row mb-5">
+                  <label className="col-sm-3 col-form-label">
+                    Job Title
+                  </label>
 
-          <textarea
-            className="form-control mb-3"
-            name="description"
-            placeholder="Job Description"
-            rows="4"
-            value={job.description}
-            onChange={handleChange}
-          />
+                  <div className="col-sm-9">
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="title"
+                      value={job.title}
+                      onChange={handleChange}
+                      placeholder="Enter Job Title"
+                    />
+                  </div>
+                </div>
 
-          <button className="btn btn-success w-100">
-            Post Job
-          </button>
+                <div className="row mb-5">
+                  <label className="col-sm-3 col-form-label">
+                    Company
+                  </label>
 
-        </form>
+                  <div className="col-sm-9">
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="company"
+                      value={job.company}
+                      onChange={handleChange}
+                      placeholder="Enter Company Name"
+                    />
+                  </div>
+                </div>
+
+                <div className="row mb-5">
+                  <label className="col-sm-3 col-form-label">
+                    Location
+                  </label>
+
+                  <div className="col-sm-9">
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="location"
+                      value={job.location}
+                      onChange={handleChange}
+                      placeholder="Enter Job Location"
+                    />
+                  </div>
+                </div>
+
+                <div className="row mb-5">
+                  <label className="col-sm-3 col-form-label">
+                    Salary
+                  </label>
+
+                  <div className="col-sm-9">
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="salary"
+                      value={job.salary}
+                      onChange={handleChange}
+                      placeholder="Enter Salary"
+                    />
+                  </div>
+                </div>
+
+                <div className="row mb-5">
+                  <label className="col-sm-3 col-form-label">
+                    Job Description
+                  </label>
+
+                  <div className="col-sm-9">
+                    <textarea
+                      className="form-control"
+                      rows="5"
+                      name="description"
+                      value={job.description}
+                      onChange={handleChange}
+                      placeholder="Enter Job Description"
+                    ></textarea>
+                  </div>
+                </div>
+
+                <div className="mt-5">
+                  <button
+                    type="submit"
+                    className="btn btn-primary w-100"
+                  >
+                    Post Job
+                  </button>
+                </div>
+
+              </form>
+
+            </div>
+
+          </div>
+
+        </div>
 
       </div>
 

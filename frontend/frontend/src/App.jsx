@@ -9,6 +9,7 @@ import PostJob from "./pages/PostJob";
 import ViewJobs from "./pages/ViewJobs";
 import MyApplications from "./pages/MyApplications";
 import RecruiterDashboard from "./pages/RecruiterDashboard";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -18,12 +19,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/my-applications" element={<MyApplications />} />
-        
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/post-job" element={<PostJob />} />
         <Route path="/jobs" element={<ViewJobs />} />
         <Route path="/recruiter-dashboard" element={<RecruiterDashboard />}/>
+        <Route path="/profile" element={<Profile />} />
         
       </Routes>
 
