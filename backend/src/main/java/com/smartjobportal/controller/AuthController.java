@@ -32,7 +32,8 @@ public class AuthController {
         if (request.getEmail() == null || request.getEmail().isBlank()) {
             return ResponseEntity.badRequest().body("Email is required");
         }
-        if (userRepository.existsByEmail(request.getEmail())) {
+        String cleanEmail = request.getEmail().trim().toLowerCase();
+        if (userRepository.existsByEmail(cleanEmail)) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email is already registered!");
         }
 
@@ -46,8 +47,8 @@ public class AuthController {
         }
 
         User user = new User();
-        user.setName(request.getName());
-        user.setEmail(request.getEmail());
+        user.setName(request.getName() != null ? request.getName().trim() : "User");
+        user.setEmail(cleanEmail);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole(role);
 
@@ -63,7 +64,8 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Email and password are required");
         }
 
-        Optional<User> userOpt = userRepository.findByEmail(request.getEmail());
+        String cleanEmail = request.getEmail().trim().toLowerCase();
+        Optional<User> userOpt = userRepository.findByEmail(cleanEmail);
         if (userOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password!");
         }

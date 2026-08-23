@@ -58,7 +58,7 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         // Public auth, healthcheck & documentation & console
-                        .requestMatchers("/", "/error", "/api/auth/**", "/h2-console/**").permitAll()
+                        .requestMatchers("/", "/error", "/api/auth/**", "/api/users/login", "/api/users/register", "/h2-console/**").permitAll()
 
                         // Public jobs viewing
                         .requestMatchers(HttpMethod.GET, "/api/jobs", "/api/jobs/*").permitAll()

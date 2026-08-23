@@ -7,8 +7,8 @@ import { User, Mail, Lock, Eye, EyeOff, ArrowRight, CheckCircle2, Briefcase, Ale
 export default function SeekerLogin() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [email, setEmail]       = useState("alex@example.com");
-  const [password, setPassword] = useState("password123");
+  const [email, setEmail]       = useState("");
+  const [password, setPassword] = useState("");
   const [showPwd, setShowPwd]   = useState(false);
   const [loading, setLoading]   = useState(false);
   const [error, setError]       = useState("");

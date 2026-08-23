@@ -28,7 +28,12 @@ function Login() {
   const handleTabChange = (role) => {
     setActiveTab(role);
     setErrorMsg("");
-    if (role === "RECRUITER") {
+    setEmail("");
+    setPassword("");
+  };
+
+  const handleDemoFill = () => {
+    if (activeTab === "RECRUITER") {
       setEmail("recruiter@techcorp.com");
       setPassword("password123");
     } else {
@@ -49,57 +54,45 @@ function Login() {
     setErrorMsg("");
 
     try {
-      const response = await api.post("/users/login", { email, password });
+      const response = await api.post("/auth/login", { email, password });
       
-      const userData = response.data;
-      if (userData && userData.id) {
-        const userWithRole = { ...userData, role: activeTab };
-        localStorage.setItem("user", JSON.stringify(userWithRole));
-        localStorage.setItem("token", "demo-jwt-token-2026");
+      const data = response.data;
+      if (data && data.token) {
+        localStorage.setItem("token", data.token);
+        const resolvedRole = (data.role === "RECRUITER") ? "RECRUITER" : "JOB_SEEKER";
+        const userObj = {
+          id: data.id,
+          name: data.name,
+          email: data.email,
+          role: resolvedRole
+        };
+        localStorage.setItem("user", JSON.stringify(userObj));
 
         confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 } });
 
-        if (activeTab === "RECRUITER" || userData.role === "RECRUITER") {
+        if (resolvedRole === "RECRUITER") {
           navigate("/recruiter-dashboard");
         } else {
           navigate("/jobs");
         }
       } else {
-        const mockUser = {
-          id: activeTab === "RECRUITER" ? 2 : 1,
-          name: email.split("@")[0] || (activeTab === "RECRUITER" ? "Sarah Jenkins" : "Alex Rivera"),
-          email: email,
-          role: activeTab
-        };
-        localStorage.setItem("user", JSON.stringify(mockUser));
-        localStorage.setItem("token", "demo-jwt-token-2026");
-        
-        confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
-
-        if (activeTab === "RECRUITER") {
-          navigate("/recruiter-dashboard");
-        } else {
-          navigate("/jobs");
-        }
+        setErrorMsg("Authentication failed. Invalid response from server.");
       }
     } catch (err) {
-      console.warn("Login request notice:", err);
-      const mockUser = {
-        id: activeTab === "RECRUITER" ? 2 : 1,
-        name: email.split("@")[0] || (activeTab === "RECRUITER" ? "Sarah Jenkins" : "Alex Rivera"),
-        email: email,
-        role: activeTab
-      };
-      localStorage.setItem("user", JSON.stringify(mockUser));
-      localStorage.setItem("token", "demo-jwt-token-2026");
-      
-      confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
-
-      if (activeTab === "RECRUITER") {
-        navigate("/recruiter-dashboard");
-      } else {
-        navigate("/jobs");
+      console.error("Login error:", err);
+      let msg = "Invalid email or password.";
+      if (err.response?.data) {
+        if (typeof err.response.data === "string") {
+          msg = err.response.data;
+        } else if (err.response.data.message) {
+          msg = err.response.data.message;
+        } else if (err.response.data.error) {
+          msg = err.response.data.error;
+        }
+      } else if (err.message) {
+        msg = err.message;
       }
+      setErrorMsg(msg);
     } finally {
       setLoading(false);
     }

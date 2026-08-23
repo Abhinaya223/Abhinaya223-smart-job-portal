@@ -34,8 +34,8 @@ export default function Navbar() {
   const isActive = (path) => location.pathname === path;
 
   // ── Role helpers ────────────────────────────────────────────────────────────
-  const isRecruiter = user?.role === "RECRUITER";
-  const isCandidate = user?.role === "JOB_SEEKER";
+  const isRecruiter = user?.role === "RECRUITER" || user?.role === "ROLE_RECRUITER";
+  const isCandidate = user?.role === "JOB_SEEKER" || user?.role === "CANDIDATE" || user?.role === "ROLE_CANDIDATE";
   const isGuest     = !user;
 
   // ── Nav link builder ────────────────────────────────────────────────────────

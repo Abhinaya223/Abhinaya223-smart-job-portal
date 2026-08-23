@@ -26,13 +26,15 @@ function ProtectedRoute({ children, redirectTo = "/seeker-login", requiredRole =
   }
 
   // ── Logged in but wrong role ───────────────────────────────────────────────
-  if (requiredRole && user.role !== requiredRole) {
-    const toast =
-      requiredRole === "RECRUITER"
-        ? "This page is only available to recruiters."
-        : "This page is only available to candidates.";
+  const isCandidateRole = (role) => role === "JOB_SEEKER" || role === "CANDIDATE" || role === "ROLE_CANDIDATE";
+  const isRecruiterRole = (role) => role === "RECRUITER" || role === "ROLE_RECRUITER";
 
-    return <Navigate to="/" state={{ toast }} replace />;
+  if (requiredRole === "JOB_SEEKER" && !isCandidateRole(user.role)) {
+    return <Navigate to="/" state={{ toast: "This page is only available to candidates." }} replace />;
+  }
+
+  if (requiredRole === "RECRUITER" && !isRecruiterRole(user.role)) {
+    return <Navigate to="/" state={{ toast: "This page is only available to recruiters." }} replace />;
   }
 
   return children;

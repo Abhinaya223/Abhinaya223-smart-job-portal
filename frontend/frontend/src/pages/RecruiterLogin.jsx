@@ -7,8 +7,8 @@ import { Briefcase, Mail, Lock, Eye, EyeOff, ArrowRight, CheckCircle2, User, Ale
 export default function RecruiterLogin() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [email, setEmail]       = useState("recruiter@techcorp.com");
-  const [password, setPassword] = useState("password123");
+  const [email, setEmail]       = useState("");
+  const [password, setPassword] = useState("");
   const [showPwd, setShowPwd]   = useState(false);
   const [loading, setLoading]   = useState(false);
   const [error, setError]       = useState("");
