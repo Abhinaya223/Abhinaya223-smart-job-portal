@@ -43,8 +43,20 @@ export default function Register() {
         return;
       }
     } catch (err) {
-      const msg = err.response?.data || "Registration failed";
-      setError(typeof msg === "string" ? msg : "An error occurred during registration.");
+      console.error("Registration error:", err);
+      let msg = "Registration failed. Please try again.";
+      if (err.response?.data) {
+        if (typeof err.response.data === "string") {
+          msg = err.response.data;
+        } else if (err.response.data.message) {
+          msg = err.response.data.message;
+        } else if (err.response.data.error) {
+          msg = err.response.data.error;
+        }
+      } else if (err.message) {
+        msg = err.message;
+      }
+      setError(msg);
     } finally {
       setLoading(false);
     }
