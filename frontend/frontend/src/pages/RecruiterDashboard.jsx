@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import api from "../api/api";
+import api, { API_BASE_URL } from "../api/api";
 import {
   LayoutDashboard, Users, CheckCircle, XCircle, Clock,
   FileText, Briefcase, UserCheck, RefreshCw, PlusCircle,
@@ -71,7 +71,7 @@ export default function RecruiterDashboard() {
     }
 
     const downloadParam = forceDownload ? "?download=true" : "";
-    const resumeUrl = `http://localhost:8080/api/applications/${app.id}/resume${downloadParam}`;
+    const resumeUrl = `${API_BASE_URL}/applications/${app.id}/resume${downloadParam}`;
     window.open(resumeUrl, "_blank", "noopener,noreferrer");
   };
 

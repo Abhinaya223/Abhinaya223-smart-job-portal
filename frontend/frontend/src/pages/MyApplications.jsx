@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import api from "../api/api";
+import api, { API_BASE_URL } from "../api/api";
 import { FileText, Briefcase, CheckCircle, Clock, XCircle, Search, ArrowRight, Building2, Eye, Download } from "lucide-react";
 
 const statusConfig = {
@@ -46,11 +46,11 @@ export default function MyApplications() {
   };
 
   const viewResume = (appId) => {
-    window.open(`http://localhost:8080/api/applications/${appId}/resume`, "_blank");
+    window.open(`${API_BASE_URL}/applications/${appId}/resume`, "_blank");
   };
 
   const downloadResume = (appId) => {
-    window.open(`http://localhost:8080/api/applications/${appId}/resume?download=true`, "_blank");
+    window.open(`${API_BASE_URL}/applications/${appId}/resume?download=true`, "_blank");
   };
 
   return (

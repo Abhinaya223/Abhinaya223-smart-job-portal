@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api/api";
 import { User, Mail, Lock, Save, Tag, ShieldCheck, CheckCircle, AlertCircle } from "lucide-react";
 
 export default function Profile() {
@@ -12,7 +12,7 @@ export default function Profile() {
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("user") || '{"id":1}');
-    axios.get(`http://localhost:8080/api/users/${stored.id || 1}`)
+    api.get(`/users/${stored.id || 1}`)
       .then(r => { setUserData(r.data); setLoading(false); })
       .catch(() => { setUserData(stored); setLoading(false); });
   }, []);
@@ -23,7 +23,7 @@ export default function Profile() {
     e.preventDefault();
     setSaving(true);
     const stored = JSON.parse(localStorage.getItem("user") || '{"id":1}');
-    axios.put(`http://localhost:8080/api/users/${stored.id || 1}`, userData)
+    api.put(`/users/${stored.id || 1}`, userData)
       .then(r => {
         const updated = r.data || userData;
         localStorage.setItem("user", JSON.stringify(updated));
