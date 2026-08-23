@@ -1,24 +1,45 @@
-
 package com.smartjobportal.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "job_applications")
 public class JobApplication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "job_id", nullable = false)
+    private Job job;
 
-    private Long jobId;
-
-    private String status;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "candidate_id", nullable = false)
+    private User candidate;
 
     private String resumeFileName;
+    private String resumeFilePath;
+
+    // APPLIED, ACCEPTED, REJECTED
+    private String status;
+
+    private LocalDateTime appliedAt;
 
     public JobApplication() {
+        this.appliedAt = LocalDateTime.now();
+        this.status = "APPLIED";
+    }
+
+    @PrePersist
+    public void onCreate() {
+        if (this.appliedAt == null) {
+            this.appliedAt = LocalDateTime.now();
+        }
+        if (this.status == null) {
+            this.status = "APPLIED";
+        }
     }
 
     public Long getId() {
@@ -29,20 +50,36 @@ public class JobApplication {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Job getJob() {
+        return job;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setJob(Job job) {
+        this.job = job;
     }
 
-    public Long getJobId() {
-        return jobId;
+    public User getCandidate() {
+        return candidate;
     }
 
-    public void setJobId(Long jobId) {
-        this.jobId = jobId;
+    public void setCandidate(User candidate) {
+        this.candidate = candidate;
+    }
+
+    public String getResumeFileName() {
+        return resumeFileName;
+    }
+
+    public void setResumeFileName(String resumeFileName) {
+        this.resumeFileName = resumeFileName;
+    }
+
+    public String getResumeFilePath() {
+        return resumeFilePath;
+    }
+
+    public void setResumeFilePath(String resumeFilePath) {
+        this.resumeFilePath = resumeFilePath;
     }
 
     public String getStatus() {
@@ -53,11 +90,36 @@ public class JobApplication {
         this.status = status;
     }
 
-    public String getResumeFileName() {
-        return resumeFileName;
+    public LocalDateTime getAppliedAt() {
+        return appliedAt;
     }
 
-    public void setResumeFileName(String resumeFileName) {
-        this.resumeFileName = resumeFileName;
+    public void setAppliedAt(LocalDateTime appliedAt) {
+        this.appliedAt = appliedAt;
+    }
+
+    // Convenience getters for JSON output compatibility
+    public Long getJobId() {
+        return job != null ? job.getId() : null;
+    }
+
+    public Long getUserId() {
+        return candidate != null ? candidate.getId() : null;
+    }
+
+    public String getCandidateName() {
+        return candidate != null ? candidate.getName() : null;
+    }
+
+    public String getCandidateEmail() {
+        return candidate != null ? candidate.getEmail() : null;
+    }
+
+    public String getJobTitle() {
+        return job != null ? job.getTitle() : null;
+    }
+
+    public String getCompanyName() {
+        return job != null ? job.getCompany() : null;
     }
 }

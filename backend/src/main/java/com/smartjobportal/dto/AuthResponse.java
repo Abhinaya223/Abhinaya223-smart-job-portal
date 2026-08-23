@@ -1,33 +1,29 @@
-package com.smartjobportal.model;
+package com.smartjobportal.dto;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "app_users")
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class AuthResponse {
+    private String token;
     private Long id;
-
     private String name;
-
-    @Column(unique = true, nullable = false)
     private String email;
-
-    private String password;
-
-    // CANDIDATE or RECRUITER
     private String role;
 
-    public User() {
+    public AuthResponse() {
     }
 
-    public User(String name, String email, String password, String role) {
+    public AuthResponse(String token, Long id, String name, String email, String role) {
+        this.token = token;
+        this.id = id;
         this.name = name;
         this.email = email;
-        this.password = password;
         this.role = role;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public Long getId() {
@@ -52,14 +48,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getRole() {

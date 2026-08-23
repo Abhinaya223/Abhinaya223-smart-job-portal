@@ -63,7 +63,7 @@ public class UserService {
     // Login User
     public User loginUser(LoginRequest loginRequest) {
 
-        User user = userRepository.findByEmail(loginRequest.getEmail());
+        User user = userRepository.findByEmail(loginRequest.getEmail()).orElse(null);
 
         if (user != null &&
                 passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
